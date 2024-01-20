@@ -51,8 +51,7 @@ class _FormPageState extends State<FormPage> {
             key: _formKey,
               child: Column(children: [
                 //simple text field
-                TextFormField(),
-                SizedBox(height: 10,),
+
                 TextFormField(
                   decoration: InputDecoration(
                     //setting lable
@@ -70,6 +69,19 @@ class _FormPageState extends State<FormPage> {
                   ),
                   //set keyboard type
                   keyboardType: TextInputType.name,
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Full name is required";
+                    }
+                    else{
+                      String pattern=r'^[A-Za-z]+(?: [A-Za-z]+)?$';
+                      RegExp regex=RegExp(pattern);
+                      if(!regex.hasMatch(value)){
+                        return "Please enter a valid name";
+                      }
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(
@@ -124,7 +136,12 @@ class _FormPageState extends State<FormPage> {
                 ),
                 SizedBox(height: 10,),
                 ElevatedButton(
-                    onPressed: (){}, child: Text("Submit",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,),)
+                    onPressed: (){
+                      if(_formKey.currentState!.validate()){
+                        print("Form validated");
+
+                      }
+                    }, child: Text("Submit",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,),)
 
               ],))
         ],
