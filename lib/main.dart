@@ -37,6 +37,7 @@ class _FormPageState extends State<FormPage> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   final _formKey = GlobalKey<FormState>();
+  String _fullname="";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +81,9 @@ class _FormPageState extends State<FormPage> {
                         return "Please enter a valid name";
                       }
                     }
+                    setState(() {
+                      _fullname=value;
+                    });
                     return null;
                   },
                 ),
@@ -139,6 +143,7 @@ class _FormPageState extends State<FormPage> {
                     onPressed: (){
                       if(_formKey.currentState!.validate()){
                         print("Form validated");
+                        print(_fullname);
 
                       }
                     }, child: Text("Submit",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,),)
